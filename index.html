@@ -1,133 +1,127 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <title>よく見える！　モトジムカーナ計算</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>良く見える！モトジムTOP比</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        body {
-            font-family: sans-serif;
-            padding: 20px;
-            max-width: 400px;
-            margin: auto;
-        }
+<style>
+body {
+    font-family: sans-serif;
+    padding: 20px;
+    max-width: 500px;
+    margin: auto;
+}
 
-        h3 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+h3 {
+    text-align: center;
+    font-size: 1.6em;
+    color: #004a99;
+    margin-bottom: 20px;
+    white-space: nowrap;
+}
 
-        label {
-            font-size: 1.15em;
-            display: block;
-            margin-top: 18px;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
+label {
+    font-size: 1.3em;
+    display: block;
+    margin-top: 18px;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
 
-        /* 3つ並び（分・秒・ミリ） */
-        .row-3 {
-            display: flex;
-            gap: 5px;
-            margin-bottom: 15px;
-        }
+.row-3 {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+}
 
-        .row-3 > div {
-            flex: 1;
-            position: relative;
-        }
+.row-3 > div {
+    flex: 1;
+    position: relative;
+}
 
-        /* 2つ並び（整数・小数） */
-        .row-2 {
-            display: flex;
-            gap: 5px;
-            margin-bottom: 15px;
-        }
+.row-2 {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+}
 
-        .row-2 > div:nth-child(1) {
-            flex: 3;
-        }
+.row-2 > div:nth-child(1) {
+    flex: 3;
+}
 
-        .row-2 > div:nth-child(2) {
-            flex: 1;
-            position: relative;
-        }
+.row-2 > div:nth-child(2) {
+    flex: 1;
+    position: relative;
+}
 
-        /* 入力欄（老眼・屋外対策） */
-        input {
-            width: 100%;
-            padding: 18px 5px;
-            box-sizing: border-box;
-            text-align: center;
+input {
+    width: 100%;
+    padding: 14px 5px;
+    box-sizing: border-box;
+    text-align: center;
+    border: 2px solid #888;
+    border-radius: 6px;
+    font-size: 1.5em;
+    font-weight: bold;
+}
 
-            border: 2px solid #666;
-            border-radius: 6px;
+.digit-guide::after {
+    content: attr(data-placeholder);
+    position: absolute;
+    right: 8px;
+    top: 16px;
+    color: #999;
+    pointer-events: none;
+    font-size: 0.75em;
+}
 
-            font-size: 28px;
-            font-weight: bold;
+#result {
+    margin-top: 20px;
+    padding: 20px;
+    background: #004a99;
+    color: white;
+    border-radius: 8px;
+    font-size: 2em;
+    text-align: center;
+    font-weight: bold;
+}
 
-            background: #fff;
-            color: #000;
-        }
+#onePercent {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: bold;
+}
 
-        input:focus {
-            outline: none;
-            border-color: #004a99;
-            box-shadow: 0 0 4px rgba(0,74,153,0.4);
-        }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
 
-        /* 桁数ガイド */
-        .digit-guide::after {
-            content: attr(data-placeholder);
-            position: absolute;
-            right: 8px;
-            top: 6px;
-            color: #999;
-            pointer-events: none;
-            font-size: 0.75em;
-        }
+th {
+    background: #f0f0f0;
+    font-size: 1.2em;
+}
 
-        /* 結果表示 */
-        #result {
-            margin-top: 20px;
-            padding: 20px;
-
-            background: #004a99;
-            color: white;
-
-            border-radius: 5px;
-
-            font-size: 2.2em;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        /* 参考表 */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            font-size: 14px;
-        }
-
-        th,
-        td {
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: center;
-        }
-
-        th {
-            background: #f0f0f0;
-            font-weight: bold;
-        }
-    </style>
+th, td {
+    border: 1px solid #ccc;
+    padding: 12px;
+    text-align: center;
+    font-size: 1.15em;
+}
+   @media (max-width: 480px) {
+    h3 {
+        font-size: 1.4em;
+    }
+}    
+</style>
 </head>
 
 <body>
 
-<h3>よく見える！　モトジムカーナ計算</h3>
+<h3>良く見える！モトジムTOP比</h3>
 
 <label>TOPタイム</label>
 <div class="row-3">
@@ -137,55 +131,60 @@
 
     <div class="digit-guide" data-placeholder="2桁">
         <input type="number" id="topS" placeholder="秒"
-               oninput="limit(this,2); saveAndCalc()">
+       min="0" max="59"
+       oninput="limit(this,2)">
     </div>
 
     <div class="digit-guide" data-placeholder="3桁">
         <input type="number" id="topMs" placeholder="ミリ"
-               oninput="limit(this,3); saveAndCalc()">
+               oninput="limit(this,3)">
     </div>
 </div>
 
 <label>TOPタイムを何％に設定？</label>
 <div class="row-2">
     <div>
-        <input type="number" id="baseP_int" placeholder="整数"
+        <input type="number" id="baseP_int"
+               placeholder="整数"
                oninput="saveAndCalc()">
     </div>
 
     <div class="digit-guide" data-placeholder="2桁">
-        <input type="number" id="baseP_dec" placeholder="小数"
-               oninput="limit(this,2); saveAndCalc()">
+        <input type="number" id="baseP_dec"
+               placeholder="小数"
+               oninput="limit(this,2)">
     </div>
 </div>
 
-<label>あなたのタイム</label>
+<label>自分のタイム</label>
 <div class="row-3">
     <div>
-        <input type="number" id="myM" placeholder="分"
+        <input type="number" id="myM"
+               placeholder="分"
                oninput="saveAndCalc()">
     </div>
 
     <div class="digit-guide" data-placeholder="2桁">
         <input type="number" id="myS" placeholder="秒"
-               oninput="limit(this,2); saveAndCalc()">
+       min="0" max="59"
+       oninput="limit(this,2)">
     </div>
 
     <div class="digit-guide" data-placeholder="3桁">
-        <input type="number" id="myMs" placeholder="ミリ"
-               oninput="limit(this,3); saveAndCalc()">
+        <input type="number" id="myMs"
+               placeholder="ミリ"
+               oninput="limit(this,3)">
     </div>
 </div>
 
-<div id="result">
-    あなたの％　---
-</div>
+<div id="result">あなたの％: ---</div>
+<div id="onePercent"></div>
 
 <table>
     <thead>
         <tr>
-            <th>参考％</th>
-            <th>参考タイム</th>
+            <th>％基準</th>
+            <th>タイム目安</th>
         </tr>
     </thead>
     <tbody id="tableBody"></tbody>
@@ -193,20 +192,34 @@
 
 <script>
 
-function limit(el, max) {
-    if (el.value.length > max) {
-        el.value = el.value.slice(0, max);
+function limit(el,max){
 
-        const next =
-            el.parentElement.nextElementSibling?.querySelector('input');
-
-        if (next) next.focus();
+    if(el.value.length > max){
+        el.value = el.value.slice(0,max);
     }
+
+    // 秒は59まで
+    if(
+        (el.id === 'topS' || el.id === 'myS') &&
+        Number(el.value) > 59
+    ){
+        el.value = 59;
+    }
+
+    // ミリ秒は999まで
+    if(
+        (el.id === 'topMs' || el.id === 'myMs') &&
+        Number(el.value) > 999
+    ){
+        el.value = 999;
+    }
+
+    saveAndCalc();
 }
 
-function saveAndCalc() {
+function saveAndCalc(){
 
-    const ids = [
+    const ids=[
         'topM',
         'topS',
         'topMs',
@@ -217,7 +230,7 @@ function saveAndCalc() {
         'myMs'
     ];
 
-    ids.forEach(id => {
+    ids.forEach(id=>{
         localStorage.setItem(
             id,
             document.getElementById(id).value
@@ -227,7 +240,7 @@ function saveAndCalc() {
     calculate();
 }
 
-window.onload = () => {
+window.onload=()=>{
 
     [
         'topM',
@@ -238,51 +251,63 @@ window.onload = () => {
         'myM',
         'myS',
         'myMs'
-    ].forEach(id => {
+    ].forEach(id=>{
 
-        const val = localStorage.getItem(id);
+        const val=localStorage.getItem(id);
 
-        if (val) {
-            document.getElementById(id).value = val;
+        if(val){
+            document.getElementById(id).value=val;
         }
     });
 
     calculate();
 };
 
-function calculate() {
+function calculate(){
 
-    const topMs =
-        (parseInt(document.getElementById('topM').value || 0) * 60000) +
-        (parseInt(document.getElementById('topS').value || 0) * 1000) +
-        parseInt(document.getElementById('topMs').value || 0);
+    const topMs=
 
-    const myMs =
-        (parseInt(document.getElementById('myM').value || 0) * 60000) +
-        (parseInt(document.getElementById('myS').value || 0) * 1000) +
-        parseInt(document.getElementById('myMs').value || 0);
+        (parseInt(document.getElementById('topM').value||0)*60000)+
+        (parseInt(document.getElementById('topS').value||0)*1000)+
+        parseInt(document.getElementById('topMs').value||0);
 
-    const baseP =
-        parseFloat(
-            (document.getElementById('baseP_int').value || 0) +
-            "." +
-            (document.getElementById('baseP_dec').value || 0)
-        );
+    const myMs=
 
-    if (topMs === 0 || myMs === 0 || baseP === 0) {
+        (parseInt(document.getElementById('myM').value||0)*60000)+
+        (parseInt(document.getElementById('myS').value||0)*1000)+
+        parseInt(document.getElementById('myMs').value||0);
+
+    const baseP=parseFloat(
+        (document.getElementById('baseP_int').value||0)
+        + "."
+        + (document.getElementById('baseP_dec').value||0)
+    );
+
+    const tbody=document.getElementById('tableBody');
+    const onePercentEl=document.getElementById('onePercent');
+
+    tbody.innerHTML='';
+
+    if(topMs===0 || baseP===0){
+
+        document.getElementById('result').innerText=
+            'あなたの％: ---';
+
+        onePercentEl.innerText='';
+
         return;
     }
 
-    const virtual100Ms =
-        topMs / (baseP / 100);
+    const virtual100Ms=
+        topMs/(baseP/100);
 
-    const myPercent =
-        ((myMs / virtual100Ms) * 100).toFixed(2);
+    const onePercentSec=
+        (virtual100Ms/100)/1000;
 
-    document.getElementById('result').innerText =
-        `あなたの％: ${myPercent}％`;
+    onePercentEl.innerText=
+        `1％ ＝ ${onePercentSec.toFixed(2)}秒`;
 
-    const rates = [
+    const rates=[
         100,
         105,
         107,
@@ -293,34 +318,43 @@ function calculate() {
         130
     ];
 
-    const tbody =
-        document.getElementById('tableBody');
+    rates.forEach(r=>{
 
-    tbody.innerHTML = '';
+        const ms=
+            virtual100Ms*(r/100);
 
-    rates.forEach(r => {
+        const m=
+            Math.floor(ms/60000);
 
-        const ms =
-            virtual100Ms * (r / 100);
+        const s=
+            Math.floor((ms%60000)/1000);
 
-        const m =
-            Math.floor(ms / 60000);
+        const mil=
+            Math.floor(ms%1000);
 
-        const s =
-            Math.floor((ms % 60000) / 1000);
-
-        const mil =
-            Math.floor(ms % 1000);
-
-        tbody.innerHTML += `
-            <tr>
-                <td>${r}％</td>
-                <td>
-                    ${m}:${s.toString().padStart(2,'0')}.${mil.toString().padStart(3,'0')}
-                </td>
-            </tr>
-        `;
+        tbody.innerHTML+=`
+        <tr>
+            <td>${r}％</td>
+            <td>
+                ${m}:${s.toString().padStart(2,'0')}.${mil.toString().padStart(3,'0')}
+            </td>
+        </tr>`;
     });
+
+    if(myMs>0){
+
+        const myPercent=
+            ((myMs/virtual100Ms)*100)
+            .toFixed(2);
+
+        document.getElementById('result').innerText=
+            `あなたの％: ${myPercent}％`;
+
+    }else{
+
+        document.getElementById('result').innerText=
+            'あなたの％: ---';
+    }
 }
 
 </script>
